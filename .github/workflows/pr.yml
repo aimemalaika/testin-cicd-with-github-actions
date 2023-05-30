@@ -14,8 +14,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       
+    - name: Create Branch
+      run: |
+        git checkout -b production
+        git push origin production
+      if: github.ref == 'refs/heads/main'
+
     - name: Create Pull Request
-      id: create_pr
       uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
@@ -26,9 +31,3 @@ jobs:
         branch: production
         base: main
         draft: true
-
-    - name: Prevent automatic merging
-      run: |
-        echo "pull_request:\n  auto_merge: false" >> $GITHUB_EVENT_PATH
-      if: steps.create_pr.outputs.pull-request-number
-
