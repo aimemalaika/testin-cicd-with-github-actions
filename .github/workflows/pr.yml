@@ -17,5 +17,5 @@ jobs:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           title: "My Pull Request Title"
           body: "My Pull Request Body"
-          branch: "my-branch"
+          branch: "production"
           base: "main"
