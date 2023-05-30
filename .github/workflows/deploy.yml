@@ -3,14 +3,14 @@ on:
     types:
       - closed
     branches:
-      - main
+      - develop
     branches-ignore:
-      - production
+      - main
 
 jobs:
   run_pull_request_approved:
     name: Run when pull request approved
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.base.ref == 'production'
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
     
     steps:
