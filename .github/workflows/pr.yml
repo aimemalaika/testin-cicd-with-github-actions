@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   create_pull_request:
     name: Create Pull Request
@@ -13,13 +14,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       
+    - name: Set up Git
+      run: |
+        git config user.name "Aime Malaika"
+        git config user.email "aimemalaika1995@gmail.com"
+      
+    - name: Create branch
+      run: |
+        git checkout -b pr-branch
+        git push origin pr-branch
+      
+    - name: Install hub
+      run: |
+        sudo apt-get install -y hub
+      
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v3
-      with:
-        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        commit-message: Automatically create pull request to production
-        title: Automatic Pull Request to Production
-        body: |
-          This pull request is automatically generated when the `main` branch receives updates.
-        branch: production
-        base: main
+      run: |
+        hub pull-request -b production -h pr-branch -m "Automatically create pull request to production"
