@@ -1,6 +1,8 @@
 
 # Getting Started with Create React App
 
+[![Create Pull Request to Production](https://github.com/aimemalaika/testin-cicd-with-github-actions/actions/workflows/pr.yml/badge.svg?branch=main)](https://github.com/aimemalaika/testin-cicd-with-github-actions/actions/workflows/pr.yml)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
