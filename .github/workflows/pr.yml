@@ -16,7 +16,7 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         commit-message: Automatically create pull request to production
         title: Automatic Pull Request to Production
         body: |
