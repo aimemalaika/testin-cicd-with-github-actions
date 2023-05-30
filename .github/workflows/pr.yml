@@ -14,7 +14,8 @@ jobs:
 
       - uses: peter-evans/create-pull-request@v3
         with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           title: "My Pull Request Title"
           body: "My Pull Request Body"
-          branch: "production"
+          branch: "my-branch"
           base: "main"
