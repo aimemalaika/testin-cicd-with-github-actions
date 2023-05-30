@@ -1,0 +1,32 @@
+name: Create Pull Request to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create_pull_request:
+    name: Create Pull Request
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout main branch
+      uses: actions/checkout@v2
+      with:
+        ref: main
+    
+    - name: Create branch for pull request
+      run: |
+        git checkout -b pull-request-branch
+        git push origin pull-request-branch
+    
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "Automatic pull request from main to production"
+        title: "Update from main branch"
+        body: |
+          This pull request includes updates from the main branch.
+        branch: production
