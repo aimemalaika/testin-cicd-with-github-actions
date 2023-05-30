@@ -1,9 +1,9 @@
+name: Auto deploy
+
 on:
   pull_request:
     types:
       - closed
-    branches:
-      - develop
     branches-ignore:
       - main
 
