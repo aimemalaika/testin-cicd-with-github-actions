@@ -16,5 +16,5 @@ jobs:
         with:
           title: "My Pull Request Title"
           body: "My Pull Request Body"
-          branch: "production"
-          target_branch: "main"
+          branch: "my-branch"
+          base: "main"
