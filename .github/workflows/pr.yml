@@ -1,4 +1,4 @@
-name: Create Pull Request to Production
+name: Create Pull Request
 
 on:
   push:
@@ -6,28 +6,15 @@ on:
       - main
 
 jobs:
-  create_pull_request:
-    name: Create Pull Request
+  create-pull-request:
     runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Create Branch
-      run: |
-        git checkout -b production
-        git push origin production
-      if: github.ref == 'refs/heads/main'
 
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v3
-      with:
-        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        commit-message: Automatically create pull request to production
-        title: Automatic Pull Request to Production
-        body: |
-          This pull request is automatically generated when the `main` branch receives updates.
-        branch: production
-        base: main
-        draft: true
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: peter-evans/create-pull-request@v3
+        with:
+          title: "My Pull Request Title"
+          body: "My Pull Request Body"
+          branch: "production"
+          target_branch: "main"
