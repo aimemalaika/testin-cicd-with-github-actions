@@ -14,19 +14,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       
-    - name: Check if production branch exists
-      id: branch_check
-      run: |
-        git ls-remote --exit-code . refs/heads/production
-        echo "::set-output name=branch_exists::true"
-      continue-on-error: true
-    
-    - name: Create Production Branch
-      if: steps.branch_check.outputs.branch_exists != 'true'
-      run: |
-        git checkout -b production
-        git push origin production
-      
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
