@@ -11,22 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout main branch
+    - name: Checkout code
       uses: actions/checkout@v2
-      with:
-        ref: main
-    
-    - name: Create branch for pull request
-      run: |
-        git checkout -b pull-request-branch
-        git push origin pull-request-branch
-    
+      
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: "Automatic pull request from main to production"
-        title: "Update from main branch"
+        commit-message: Automatically create pull request to production
+        title: Automatic Pull Request to Production
         body: |
-          This pull request includes updates from the main branch.
+          This pull request is automatically generated when the `main` branch receives updates.
         branch: production
+        base: main
