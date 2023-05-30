@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
 jobs:
   create_pull_request:
     name: Create Pull Request
