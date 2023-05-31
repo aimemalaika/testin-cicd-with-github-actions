@@ -34,10 +34,14 @@ jobs:
 
           - name: Start server
             run: |
-              #!/bin/bash
-              server -s build &
+              echo "Starting server..."
+              npm run server &
+
+              # Wait for the server to start (adjust the sleep time if needed)
               sleep 5
-              if pgrep -x "server" >/dev/null; then
+
+              # Check if the server is running
+              if pgrep -x "node" >/dev/null; then
                 echo "Server running"
               else
                 echo "Failed to start server"
