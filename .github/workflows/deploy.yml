@@ -6,22 +6,23 @@ on:
       - closed
 
 jobs:
-  build:
+  deploy:
+    name: Deploy to Production
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Check branch
-        id: branch-check
-        run: echo "Branch is ${{ github.event.pull_request.base.ref }}"
-
-      - name: Run your action
-        if: ${{ github.event.pull_request.base.ref == 'main' }}
+      - name: Install SSH keys
         run: |
-          # Add your desired action commands here
-          # For example, you can run tests, build artifacts, or deploy code
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
 
+      - name: Connect and pull
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.PRODUCTION_BRANCH }} && git pull"
 
-
+      - name: Cleanup
+        run: rm -rf ~/.ssh
