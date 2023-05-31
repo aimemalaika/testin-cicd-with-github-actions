@@ -19,6 +19,9 @@ jobs:
 
       - name: Run your action
         if: ${{ github.event.pull_request.base.ref == 'main' }}
-        # Add your desired action here
-        # For example, you can run tests, build artifacts, or deploy code
+        run: |
+          # Add your desired action commands here
+          # For example, you can run tests, build artifacts, or deploy code
+
+
 
