@@ -9,21 +9,39 @@ jobs:
   deploy:
     name: Deploy to Production
     runs-on: self-hosted
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
+      - name: Check branch
+        id: branch-check
+        run: echo "Branch is ${{ github.event.pull_request.base.ref }}"
 
-      - name: Install dependencies
-        run: npm install
+      - name: Run your action
+        if: ${{ github.event.pull_request.base.ref == 'main' }}
+        steps:
+          - name: Set up Node.js
+            uses: actions/setup-node@v2
+            with:
+              node-version: 14
 
-      - name: Build React app
-        run: npm run build
+          - name: Install dependencies
+            run: npm install
 
-      - name: Start server
-        run: npm run server
+          - name: Build React app
+            run: npm run build
+
+          - name: Start server
+            run: |
+              #!/bin/bash
+              server -s build &
+              sleep 5
+              if pgrep -x "server" >/dev/null; then
+                echo "Server running"
+              else
+                echo "Failed to start server"
+                exit 1
+              fi
+
+      # Continue with other steps...
