@@ -42,15 +42,17 @@ jobs:
         if: ${{ github.event.pull_request.base.ref == 'main' }}
         run: |
           echo "Starting server..."
-          npm run server &
+          nohup npx serve -s build -p 3000 > /dev/null 2>&1 &
 
           # Wait for the server to start (adjust the sleep time if needed)
           sleep 5
 
           # Check if the server is running
-          if pgrep -x "node" >/dev/null; then
+          if pgrep -f "npx serve -s build -p 3000" >/dev/null; then
             echo "Server running"
           else
             echo "Failed to start server"
             exit 1
           fi
+
+      # Continue with other steps...
