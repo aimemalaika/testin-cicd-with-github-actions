@@ -25,8 +25,5 @@ jobs:
       - name: Build React app
         run: npm run build
 
-      - name: install serve package
-        run:  npm install -g serve
-
-      - name: Serve the build
-        run: serve -s build -p 5666
+      - name: Start server
+        run: npm run server
