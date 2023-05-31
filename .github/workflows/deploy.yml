@@ -25,5 +25,5 @@ jobs:
       - name: Build React app
         run: npm run build
 
-      - name: Serve the build
-        run: serve -s build -p 5666
+      - name: Start server
+        run: npm start
