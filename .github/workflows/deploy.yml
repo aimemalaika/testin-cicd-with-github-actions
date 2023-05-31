@@ -26,4 +26,5 @@ jobs:
         run: npm run build
 
       - name: Deploy to production
-        # Add the necessary steps to deploy the built React app to your production environment
+        run: |
+          # Add the necessary steps to deploy the built React app to your production environment
