@@ -20,32 +20,37 @@ jobs:
 
       - name: Run your action
         if: ${{ github.event.pull_request.base.ref == 'main' }}
-        steps:
-          - name: Set up Node.js
-            uses: actions/setup-node@v2
-            with:
-              node-version: 14
+        run: |
+          echo "Running your action..."
+          # Add your desired action or command here
 
-          - name: Install dependencies
-            run: npm install
+      - name: Set up Node.js
+        if: ${{ github.event.pull_request.base.ref == 'main' }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
 
-          - name: Build React app
-            run: npm run build
+      - name: Install dependencies
+        if: ${{ github.event.pull_request.base.ref == 'main' }}
+        run: npm install
 
-          - name: Start server
-            run: |
-              echo "Starting server..."
-              npm run server &
+      - name: Build React app
+        if: ${{ github.event.pull_request.base.ref == 'main' }}
+        run: npm run build
 
-              # Wait for the server to start (adjust the sleep time if needed)
-              sleep 5
+      - name: Start server
+        if: ${{ github.event.pull_request.base.ref == 'main' }}
+        run: |
+          echo "Starting server..."
+          npm run server &
 
-              # Check if the server is running
-              if pgrep -x "node" >/dev/null; then
-                echo "Server running"
-              else
-                echo "Failed to start server"
-                exit 1
-              fi
+          # Wait for the server to start (adjust the sleep time if needed)
+          sleep 5
 
-      # Continue with other steps...
+          # Check if the server is running
+          if pgrep -x "node" >/dev/null; then
+            echo "Server running"
+          else
+            echo "Failed to start server"
+            exit 1
+          fi
