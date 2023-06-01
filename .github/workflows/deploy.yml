@@ -40,5 +40,16 @@ jobs:
 
       - name: Start server
         if: ${{ github.event.pull_request.base.ref == 'main' }}
-        run: pm2 start npm --name "testing-integration" -- run server -- -p 9000
-      # Continue with other steps...
+        run: pm2 start npm --name "testing-integration" -- run server
+
+      - name: Deploy to remote server
+        if: ${{ github.event.pull_request.base.ref == 'main' }}
+        run: |
+          # Variables
+          remote_host="172.16.1.101"
+          remote_directory="/projects/testin_ui"
+          local_directory="/projects/deploy_builder/testin-cicd-with-github-actions/testin-cicd-with-github-actions"
+          private_key="/home/a.malaika/.ssh/deployment_test"
+
+          # Copy the build folder to the remote server
+          rsync -avz -e "ssh -i $private_key" "$local_directory/build/" "$remote_host:$remote_directory"
