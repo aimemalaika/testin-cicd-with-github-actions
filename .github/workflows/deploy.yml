@@ -51,11 +51,11 @@ jobs:
           local_directory="/projects/deploy_builder/testin-cicd-with-github-actions/testin-cicd-with-github-actions"
           private_key="/home/a.malaika/.ssh/deployment_test"
 
-          # Delete the existing PM2 process on the remote server
-          ssh -i "$private_key" "$remote_host" "pm2 delete testing-integration"
+          # Check if the PM2 process exists and stop it if it does
+          ssh -i "$private_key" "$remote_host" "pm2 show testing-integration &> /dev/null && pm2 delete testing-integration"
 
           # Copy the entire folder to the remote server
           rsync -avz -e "ssh -i $private_key" "$local_directory/" "$remote_host:$remote_directory"
           
           # SSH into the remote server and run the pm2 command
-          ssh -i "$private_key" "$remote_host" "cd $remote_directory && pm2 start npm --name "testing-integration" -- run server"
+          ssh -i "$private_key" "$remote_host" "cd $remote_directory && pm2 start npm --name 'testing-integration' -- run server"
