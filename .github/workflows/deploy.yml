@@ -40,5 +40,5 @@ jobs:
 
       - name: Start server
         if: ${{ github.event.pull_request.base.ref == 'main' }}
-        run: pm2 start npm --name "Minuza-Frontend" -- run start -- -p 8088
+        run: pm2 start npm --name "testing-integration" -- run server -- -p 9000
       # Continue with other steps...
