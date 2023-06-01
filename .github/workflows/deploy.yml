@@ -51,8 +51,8 @@ jobs:
           local_directory="/projects/deploy_builder/testin-cicd-with-github-actions/testin-cicd-with-github-actions"
           private_key="/home/a.malaika/.ssh/deployment_test"
 
-          # Copy the build folder to the remote server
-          rsync -avz -e "ssh -i $private_key" "$local_directory/build/" "$remote_host:$remote_directory"
-
+          # Copy the entire folder to the remote server
+          rsync -avz -e "ssh -i $private_key" "$local_directory/" "$remote_host:$remote_directory"
+          
           # SSH into the remote server and run the pm2 command
           ssh -i "$private_key" "$remote_host" "cd $remote_directory && pm2 start npm --name 'Minuza-Frontend' -- run start -- -p 8087"
